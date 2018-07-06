@@ -14,6 +14,31 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     var planes = Array<Plane>()
+    @IBAction func sceneViewTapped(_ recognizer: UITapGestureRecognizer) {
+        // sceneView上のタップ箇所を取得
+        let tapPoint = recognizer.location(in: sceneView)
+        
+        // scneView上の位置を取得
+        let results = sceneView.hitTest(tapPoint, types: .existingPlaneUsingExtent)
+        
+        guard let hitResult = results.first else { return }
+        
+        // 箱を生成
+        let cube = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
+        let cubeNode = SCNNode(geometry: cube)
+        
+        // 箱の判定を追加
+        let cubeShape = SCNPhysicsShape(geometry: cube, options: nil)
+        cubeNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: cubeShape)
+        
+        // sceneView上のタップ座標のどこに箱を出現させるかを指定
+        cubeNode.position = SCNVector3Make(hitResult.worldTransform.columns.3.x,
+                                           hitResult.worldTransform.columns.3.y + 0.1,
+                                           hitResult.worldTransform.columns.3.z)
+        
+        // ノードを追加
+        sceneView.scene.rootNode.addChildNode(cubeNode)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
