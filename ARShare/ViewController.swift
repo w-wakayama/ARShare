@@ -10,35 +10,21 @@ import UIKit
 import SceneKit
 import ARKit
 
+var boxNode = SCNNode()
+let scene = SCNScene()
+
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     var planes = Array<Plane>()
-    @IBAction func sceneViewTapped(_ recognizer: UITapGestureRecognizer) {
-        // sceneView上のタップ箇所を取得
-        let tapPoint = recognizer.location(in: sceneView)
-        
-        // scneView上の位置を取得
-        let results = sceneView.hitTest(tapPoint, types: .existingPlaneUsingExtent)
-        
-        guard let hitResult = results.first else { return }
-        
-        // 箱を生成
-        let cube = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
-        let cubeNode = SCNNode(geometry: cube)
-        
-        // 箱の判定を追加
-        let cubeShape = SCNPhysicsShape(geometry: cube, options: nil)
-        cubeNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: cubeShape)
-        
-        // sceneView上のタップ座標のどこに箱を出現させるかを指定
-        cubeNode.position = SCNVector3Make(hitResult.worldTransform.columns.3.x,
-                                           hitResult.worldTransform.columns.3.y + 0.1,
-                                           hitResult.worldTransform.columns.3.z)
-        
-        // ノードを追加
-        sceneView.scene.rootNode.addChildNode(cubeNode)
+    
+    @IBAction func onPinchGesture(_ sender: UIPinchGestureRecognizer) {
+        let pinchScaleX:CGFloat = ((sender.scale - 1.0) * 0.1 + 1.0) * CGFloat((boxNode.scale.x))
+        let pinchScaleY:CGFloat = ((sender.scale - 1.0) * 0.1 + 1.0) * CGFloat((boxNode.scale.y))
+        let pinchScaleZ:CGFloat = ((sender.scale - 1.0) * 0.1 + 1.0) * CGFloat((boxNode.scale.z))
+        boxNode.scale = SCNVector3Make(Float(pinchScaleX), Float(pinchScaleY), Float(pinchScaleZ))
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,10 +38,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Create a new scene
         // let scene = SCNScene(named: "art.scnassets/ship.scn")!
         
-        sceneView.debugOptions = ARSCNDebugOptions.showFeaturePoints
+        // 箱を生成
+        let boxGeometry = SCNBox(width: 0.1,
+                                 height: 0.1,
+                                 length: 0.1,
+                                 chamferRadius: 0)
+        boxNode = SCNNode(geometry: boxGeometry)
+        boxNode.position = SCNVector3Make(0, 0.1, -0.5)
+        scene.rootNode.addChildNode(boxNode)
+        
+        //sceneView.debugOptions = ARSCNDebugOptions.showFeaturePoints
         
         // Set the scene to the view
-        sceneView.scene = SCNScene()
+        sceneView.scene = scene
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <gestureRecognizers/>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="Rfn-c7-39m" appends="YES" id="jp1-2f-Kqr"/>
+                            <outletCollection property="gestureRecognizers" destination="cf7-CM-5bc" appends="YES" id="d1b-wQ-0At"/>
                         </connections>
                     </arscnView>
                     <connections>
@@ -26,11 +26,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Rfn-c7-39m">
+                <pinchGestureRecognizer id="cf7-CM-5bc">
                     <connections>
-                        <action selector="sceneViewTapped:" destination="BV1-FR-VrT" id="ede-5u-bSP"/>
+                        <action selector="onPinchGesture:" destination="BV1-FR-VrT" id="gXz-cG-m6u"/>
                     </connections>
-                </tapGestureRecognizer>
+                </pinchGestureRecognizer>
             </objects>
         </scene>
     </scenes>
