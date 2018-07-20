@@ -12,6 +12,7 @@ import ARKit
 
 var boxNode = SCNNode()
 let scene = SCNScene()
+var flagYZ: Bool = true
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
@@ -25,6 +26,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         boxNode.scale = SCNVector3Make(Float(pinchScaleX), Float(pinchScaleY), Float(pinchScaleZ))
     }
     
+    @IBAction func onPanGesture(_ sender: UIPanGestureRecognizer) {
+        let point: CGPoint = sender.translation(in: sceneView)
+        /*
+        sender.view!.center.x += point.x
+        sender.view!.center.y += point.y
+        sender.setTranslation(CGPoint(x: 0, y: 0), in: sceneView)
+        */
+        let panPositionX: CGFloat = point.x * 0.001 // * CGFloat((boxNode.position.x))
+        let panPositionY: CGFloat = point.y * 0.001 // * CGFloat((boxNode.position.y))
+        if flagYZ == true {
+            boxNode.position = SCNVector3Make(Float(panPositionX), Float(-panPositionY), -0.5)
+        } else {
+            boxNode.position = SCNVector3Make(Float(panPositionX), 0.1, Float(panPositionY))
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +60,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                                  length: 0.1,
                                  chamferRadius: 0)
         boxNode = SCNNode(geometry: boxGeometry)
-        boxNode.position = SCNVector3Make(0, 0.1, -0.5)
+        boxNode.position = SCNVector3Make(0.1, 0.1, -0.5)
         scene.rootNode.addChildNode(boxNode)
         
         //sceneView.debugOptions = ARSCNDebugOptions.showFeaturePoints

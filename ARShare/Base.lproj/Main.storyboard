@@ -19,6 +19,7 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="cf7-CM-5bc" appends="YES" id="d1b-wQ-0At"/>
+                            <outletCollection property="gestureRecognizers" destination="G0w-lr-dMJ" appends="YES" id="mSM-tA-zn9"/>
                         </connections>
                     </arscnView>
                     <connections>
@@ -31,6 +32,11 @@
                         <action selector="onPinchGesture:" destination="BV1-FR-VrT" id="gXz-cG-m6u"/>
                     </connections>
                 </pinchGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="G0w-lr-dMJ">
+                    <connections>
+                        <action selector="onPanGesture:" destination="BV1-FR-VrT" id="vBE-aD-P4N"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
         </scene>
     </scenes>
