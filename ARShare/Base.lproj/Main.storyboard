@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,31 +14,48 @@
         <scene sceneID="tXr-a1-R10">
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="ARShare" customModuleProvider="target" sceneMemberID="viewController">
-                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BrB-h1-WRS">
+                    <view key="view" contentMode="scaleToFill" id="LFy-8m-rH1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="cf7-CM-5bc" appends="YES" id="d1b-wQ-0At"/>
-                            <outletCollection property="gestureRecognizers" destination="G0w-lr-dMJ" appends="YES" id="mSM-tA-zn9"/>
-                        </connections>
-                    </arscnView>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CPI-7X-LeU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="gkz-GN-C2i" appends="YES" id="ehT-M1-3ND"/>
+                                    <outletCollection property="gestureRecognizers" destination="7gG-Yr-3jh" appends="YES" id="IsK-Lp-rTh"/>
+                                </connections>
+                            </arscnView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yKv-D2-12b" userLabel="ButtonZ">
+                                <rect key="frame" x="282" y="617" width="77" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Change YZ"/>
+                                <connections>
+                                    <action selector="tapButtonZ:" destination="BV1-FR-VrT" eventType="touchUpInside" id="f6c-tR-jQJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="1rX-48-2zQ"/>
+                    </view>
                     <connections>
-                        <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <outlet property="sceneView" destination="CPI-7X-LeU" id="uW0-Pb-ksm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
-                <pinchGestureRecognizer id="cf7-CM-5bc">
+                <pinchGestureRecognizer id="gkz-GN-C2i">
                     <connections>
-                        <action selector="onPinchGesture:" destination="BV1-FR-VrT" id="gXz-cG-m6u"/>
+                        <action selector="onPinchGesture:" destination="BV1-FR-VrT" id="9XC-in-FRr"/>
                     </connections>
                 </pinchGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="G0w-lr-dMJ">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="7gG-Yr-3jh">
                     <connections>
-                        <action selector="onPanGesture:" destination="BV1-FR-VrT" id="vBE-aD-P4N"/>
+                        <action selector="onPanGesture:" destination="BV1-FR-VrT" id="EfB-bm-c6w"/>
                     </connections>
                 </panGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
         </scene>
     </scenes>
 </document>

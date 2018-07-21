@@ -20,6 +20,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var planes = Array<Plane>()
     
     @IBAction func onPinchGesture(_ sender: UIPinchGestureRecognizer) {
+        print(sender.scale)
         let pinchScaleX:CGFloat = ((sender.scale - 1.0) * 0.1 + 1.0) * CGFloat((boxNode.scale.x))
         let pinchScaleY:CGFloat = ((sender.scale - 1.0) * 0.1 + 1.0) * CGFloat((boxNode.scale.y))
         let pinchScaleZ:CGFloat = ((sender.scale - 1.0) * 0.1 + 1.0) * CGFloat((boxNode.scale.z))
@@ -33,13 +34,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sender.view!.center.y += point.y
         sender.setTranslation(CGPoint(x: 0, y: 0), in: sceneView)
         */
-        let panPositionX: CGFloat = point.x * 0.001 // * CGFloat((boxNode.position.x))
-        let panPositionY: CGFloat = point.y * 0.001 // * CGFloat((boxNode.position.y))
         if flagYZ == true {
-            boxNode.position = SCNVector3Make(Float(panPositionX), Float(-panPositionY), -0.5)
+            let panPositionX: CGFloat = point.x * 0.001 // * CGFloat((boxNode.position.x))
+            let panPositionY: CGFloat = point.y * 0.001 // * CGFloat((boxNode.position.y))
+            boxNode.position = SCNVector3Make(Float(panPositionX), Float(-panPositionY), Float(boxNode.position.z))
         } else {
-            boxNode.position = SCNVector3Make(Float(panPositionX), 0.1, Float(panPositionY))
+            let panPositionX: CGFloat = point.x * 0.001 // * CGFloat((boxNode.position.x))
+            let panPositionZ: CGFloat = point.y * 0.001 // * CGFloat((boxNode.position.z))
+            boxNode.position = SCNVector3Make(Float(panPositionX), Float(boxNode.position.y), Float(panPositionZ))
         }
+    }
+    
+    @IBAction func tapButtonZ(_ sender: UIButton) {
+        flagYZ = !flagYZ
     }
     
     override func viewDidLoad() {
@@ -60,7 +67,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                                  length: 0.1,
                                  chamferRadius: 0)
         boxNode = SCNNode(geometry: boxGeometry)
-        boxNode.position = SCNVector3Make(0.1, 0.1, -0.5)
+        boxNode.position = SCNVector3Make(0.1, 0.1, -0.1)
         scene.rootNode.addChildNode(boxNode)
         
         //sceneView.debugOptions = ARSCNDebugOptions.showFeaturePoints
